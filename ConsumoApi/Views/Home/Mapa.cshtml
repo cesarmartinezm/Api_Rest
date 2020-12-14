@@ -1,0 +1,63 @@
+﻿
+@{
+    ViewBag.Title = "Mapa";
+}
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Añadir Marcadores</title>
+    <meta charset="utf-8" />
+    <script type="text/javascript" src="//maps.google.com/maps/api/js"></script>
+    <script>
+        function initMap() {
+            // Creamos un objeto mapa y especificamos el elemento DOM donde se va a mostrar.
+            var map = new google.maps.Map(document.getElementById('mapa'), {
+                center: { lat: 43.2686751, lng: -2.9340005 },
+                scrollwheel: false,
+                zoom: 8,
+                zoomControl: true,
+                rotateControl: false,
+                mapTypeControl: true,
+                streetViewControl: false,
+            });
+            // Creamos dos marcadores.
+            var marker1 = new google.maps.Marker({
+                position: { lat: 21.13180225, lng: -89.50884361 },
+                draggable: false
+            });
+            // a este marcador le añadimos un icono personalizado
+            var marker2 = new google.maps.Marker({
+                position: { lat: 42.8286751, lng: -3.0990005 },
+                draggable: false
+            });
+            // Le asignamos el mapa a los marcadores.
+            marker1.setMap(map);
+            marker2.setMap(map);
+        }
+    </script>
+    @foreach (var geo in Model)
+    {
+        <script>
+        // a este marcador le añadimos un icono personalizado
+            var id = @geo.IdGeorreferencia;
+        var id = new google.maps.Marker({
+            position: { lat: @geo.Latitud, lng: @geo.Longitud },
+            draggable: false
+        });
+        // Le asignamos el mapa a los marcadores.
+        id.setMap(map);
+
+        </script>
+    }
+
+</head>
+<body onload="initMap()">
+    <h1>Localización</h1>
+    <div id="mapa" style="width: 450px; height: 350px;"> </div>
+</body>
+</html>
+
